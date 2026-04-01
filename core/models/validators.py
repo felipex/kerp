@@ -50,40 +50,43 @@ def format_cpf(value):
 
 
 
-import re
+def validate_cnpj(cnpj: str) -> bool:
+    if not cnpj:
+        raise ValidationError(_('CNPJ is required.'))
 
-def validate_cnpj(cnpj):
-    # 1. Limpeza: remove pontos, barras e traços
-    cnpj = re.sub(r'[^0-9]', '', str(cnpj))
-    
-    # 2. Verifica tamanho e se é uma sequência de números iguais
-    if len(cnpj) != 14 or len(set(cnpj)) == 1:
+    cnpj = ''.join(filter(str.isdigit, str(cnpj)))
+    if len(cnpj) != 14:
         raise ValidationError(_('Invalid CNPJ length.'))
-    
-    # 3. Cálculo dos dígitos verificadores
-    def check_digit(base, weights):
-        soma = 0
-        for i in range(len(base)):
-            soma += int(base[i]) * weights[i]
-        
-        remainder = soma % 11
-        return 0 if remainder < 2 else 11 - remainder
 
-    # Pesos para o cálculo
-    pesos1 = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]
-    pesos2 = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]
-    
-    # Primeiro dígito
-    dv1 = str(check_digit(cnpj[:12], pesos1))
-    
-    # Segundo dígito
-    dv2 = str(check_digit(cnpj[:12] + dv1, pesos2))
-    
-    # 4. Verifica se os dígitos calculados conferem
-    if cnpj[-2] != dv1:
+    if cnpj == cnpj[0] * 14:
+        raise ValidationError(_('Invalid CNPJ sequence.'))
+
+    weigths = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]
+    part = cnpj[:12]
+
+    sum_1 = 0
+    for d, w in zip(part, weigths):
+        sum_1 += int(d) * w
+
+    remainder_1 = sum_1 % 11
+    digit_1 = 0 if remainder_1 < 2 else 11 - remainder_1
+
+    if int(cnpj[12]) != digit_1:
         raise ValidationError(_('Invalid CNPJ check digit 1.'))
-    if cnpj[-1] != dv2:
+
+    part_2 = cnpj[:13]
+    sum_2 = 0
+    weigths.insert(0, 6)
+    for d, w in zip(part_2, weigths):
+        sum_2 += int(d) * w
+
+    remainder_2 = sum_2 % 11
+    digit_2 = 0 if remainder_2 < 2 else 11 - remainder_2
+
+    if int(cnpj[13]) != digit_2:
         raise ValidationError(_('Invalid CNPJ check digit 2.'))
+
+    return True    
 
 
 def format_cnpj(value):
