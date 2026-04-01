@@ -1,5 +1,6 @@
 from core.models import BaseModel
 from django.db import models
+from core.models import CPFField
 
 class Customer(BaseModel):
     """
@@ -15,7 +16,7 @@ class Customer(BaseModel):
     
     # Fields for PF
     name = models.CharField(max_length=100, blank=True, null=True)
-    cpf = models.CharField(max_length=14, blank=True, null=True, verbose_name="CPF")
+    cpf = CPFField(blank=True, null=True, verbose_name="CPF")
     
     # Fields for PJ
     company_name = models.CharField(max_length=255, blank=True, null=True)
