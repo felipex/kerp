@@ -2,9 +2,10 @@
 
 {% block content %}
 <h1>Lista de Clientes</h1>
+<a href="{% url 'customer_create' %}">Criar Cliente</a>
 <ul>
     {% for customer in customers %}
-    <li>{{ customer }} - {{ customer.customer_type }}</li>
+    <li>{{ customer }} - {{ customer.customer_type }} <a href="{% url 'customer_update' customer.pk %}">Editar</a></li>
 
     {% endfor %}
 </ul>

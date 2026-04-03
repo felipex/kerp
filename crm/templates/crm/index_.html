@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Matrix Admin Clone</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        /* Custom scrollbar para o painel principal */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 flex h-screen overflow-hidden text-gray-800 font-sans">
+
+    <aside id="sidebar"
+        class="bg-[#1e2433] text-gray-400 w-64 flex-shrink-0 flex flex-col transition-all duration-300 z-20">
+        <div class="h-16 bg-[#161a25] flex items-center px-4 shadow-sm">
+            <i data-lucide="grid" class="text-[#27a9e3] mr-2"></i>
+            <span class="text-white text-lg font-bold tracking-wide">Matrix <span
+                    class="text-gray-300 font-normal">Admin</span></span>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto py-4">
+            <ul class="space-y-1">
+                <li>
+                    <a href="#" class="flex items-center px-4 py-3 bg-[#27a9e3] text-white">
+                        <i data-lucide="layout-dashboard" class="w-5 h-5 mr-3"></i> Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center px-4 py-3 hover:bg-[#273043] transition-colors">
+                        <i data-lucide="bar-chart-2" class="w-5 h-5 mr-3"></i> Charts
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center px-4 py-3 hover:bg-[#273043] transition-colors">
+                        <i data-lucide="layout" class="w-5 h-5 mr-3"></i> Widgets
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center px-4 py-3 hover:bg-[#273043] transition-colors">
+                        <i data-lucide="table" class="w-5 h-5 mr-3"></i> Tables
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center px-4 py-3 hover:bg-[#273043] transition-colors">
+                        <i data-lucide="maximize" class="w-5 h-5 mr-3"></i> Full Width
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center px-4 py-3 hover:bg-[#273043] transition-colors">
+                        <i data-lucide="file-text" class="w-5 h-5 mr-3 flex-shrink-0"></i>
+                        <span class="flex-1">Forms</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="flex-1 flex flex-col overflow-hidden relative">
+
+        <header class="h-16 bg-[#1e2433] md:bg-white flex items-center justify-between px-4 shadow-sm z-10">
+            <div class="flex items-center">
+                <button id="toggleSidebar"
+                    class="text-gray-400 md:text-gray-600 hover:text-gray-900 focus:outline-none transition-colors">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+
+                <div class="ml-4 hidden md:flex items-center cursor-pointer text-gray-600 hover:text-gray-900">
+                    <span class="text-sm font-medium mr-1">Create New</span>
+                    <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <button class="text-gray-400 md:text-gray-500 hover:text-gray-700"><i data-lucide="search"
+                        class="w-5 h-5"></i></button>
+                <button class="text-gray-400 md:text-gray-500 hover:text-gray-700"><i data-lucide="bell"
+                        class="w-5 h-5"></i></button>
+                <button class="text-gray-400 md:text-gray-500 hover:text-gray-700"><i data-lucide="message-square"
+                        class="w-5 h-5"></i></button>
+                <div
+                    class="w-8 h-8 rounded-full bg-orange-400 flex items-center justify-center text-white font-bold shadow cursor-pointer hover:bg-orange-500 transition-colors">
+                    <i data-lucide="user" class="w-4 h-4"></i>
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-4 md:p-6">
+
+            <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6">
+                <h1 class="text-2xl font-semibold text-gray-800 mb-2 md:mb-0">Dashboard</h1>
+                <nav class="text-sm text-gray-500" aria-label="Breadcrumb">
+                    <a href="#" class="text-blue-500 hover:underline">Home</a>
+                    <span class="mx-1">&gt;</span>
+                    <span>Library</span>
+                </nav>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-6 text-white text-center">
+                <button
+                    class="bg-[#27a9e3] p-4 flex flex-col items-center justify-center rounded shadow-sm hover:opacity-90 transition transform hover:-translate-y-1">
+                    <i data-lucide="layout-dashboard" class="w-8 h-8 mb-2"></i>
+                    <span class="text-sm font-medium">Dashboard</span>
+                </button>
+                <button
+                    class="bg-[#28b779] p-4 flex flex-col items-center justify-center rounded shadow-sm hover:opacity-90 transition transform hover:-translate-y-1">
+                    <i data-lucide="line-chart" class="w-8 h-8 mb-2"></i>
+                    <span class="text-sm font-medium">Charts</span>
+                </button>
+                <button
+                    class="bg-[#ffb848] p-4 flex flex-col items-center justify-center rounded shadow-sm hover:opacity-90 transition transform hover:-translate-y-1">
+                    <i data-lucide="layout" class="w-8 h-8 mb-2"></i>
+                    <span class="text-sm font-medium">Widgets</span>
+                </button>
+                <button
+                    class="bg-[#da542e] p-4 flex flex-col items-center justify-center rounded shadow-sm hover:opacity-90 transition transform hover:-translate-y-1">
+                    <i data-lucide="table" class="w-8 h-8 mb-2"></i>
+                    <span class="text-sm font-medium">Tables</span>
+                </button>
+                <button
+                    class="bg-[#2255a4] p-4 flex flex-col items-center justify-center rounded shadow-sm hover:opacity-90 transition transform hover:-translate-y-1">
+                    <i data-lucide="maximize" class="w-8 h-8 mb-2"></i>
+                    <span class="text-sm font-medium">Full Width</span>
+                </button>
+                <button
+                    class="bg-[#da542e] p-4 flex flex-col items-center justify-center rounded shadow-sm hover:opacity-90 transition transform hover:-translate-y-1">
+                    <i data-lucide="file-text" class="w-8 h-8 mb-2"></i>
+                    <span class="text-sm font-medium">Forms</span>
+                </button>
+                <button
+                    class="bg-[#2255a4] p-4 flex flex-col items-center justify-center rounded shadow-sm hover:opacity-90 transition transform hover:-translate-y-1">
+                    <i data-lucide="mouse-pointer-click" class="w-8 h-8 mb-2"></i>
+                    <span class="text-sm font-medium">Buttons</span>
+                </button>
+                <button
+                    class="bg-[#27a9e3] p-4 flex flex-col items-center justify-center rounded shadow-sm hover:opacity-90 transition transform hover:-translate-y-1">
+                    <i data-lucide="edit-3" class="w-8 h-8 mb-2"></i>
+                    <span class="text-sm font-medium">Elements</span>
+                </button>
+                <button
+                    class="bg-[#28b779] p-4 flex flex-col items-center justify-center rounded shadow-sm hover:opacity-90 transition transform hover:-translate-y-1">
+                    <i data-lucide="calendar" class="w-8 h-8 mb-2"></i>
+                    <span class="text-sm font-medium">Calendar</span>
+                </button>
+                <button
+                    class="bg-[#ffb848] p-4 flex flex-col items-center justify-center rounded shadow-sm hover:opacity-90 transition transform hover:-translate-y-1">
+                    <i data-lucide="alert-triangle" class="w-8 h-8 mb-2"></i>
+                    <span class="text-sm font-medium">Errors</span>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                <div class="lg:col-span-2 bg-white rounded shadow-sm p-5 border border-gray-100">
+                    <h2 class="text-lg font-semibold text-gray-700">Site Analysis</h2>
+                    <p class="text-xs text-gray-400 mb-6">Overview of Latest Month</p>
+                    <div class="w-full h-72 relative">
+                        <canvas id="analysisChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-4">
+                    <div class="bg-[#273043] text-white rounded shadow-sm p-5 flex items-center justify-between">
+                        <div class="bg-[#1e2433] p-3 rounded">
+                            <i data-lucide="user" class="w-6 h-6 text-gray-300"></i>
+                        </div>
+                        <div class="text-right">
+                            <h3 class="text-2xl font-bold">2540</h3>
+                            <p class="text-xs text-gray-400 mt-1 uppercase tracking-wider font-semibold">Total Users</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-[#273043] text-white rounded shadow-sm p-5 flex items-center justify-between">
+                        <div class="bg-[#1e2433] p-3 rounded">
+                            <i data-lucide="plus" class="w-6 h-6 text-gray-300"></i>
+                        </div>
+                        <div class="text-right">
+                            <h3 class="text-2xl font-bold">120</h3>
+                            <p class="text-xs text-gray-400 mt-1 uppercase tracking-wider font-semibold">New Users</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-[#273043] text-white rounded shadow-sm p-5 flex items-center justify-between">
+                        <div class="bg-[#1e2433] p-3 rounded">
+                            <i data-lucide="shopping-cart" class="w-6 h-6 text-gray-300"></i>
+                        </div>
+                        <div class="text-right">
+                            <h3 class="text-2xl font-bold">656</h3>
+                            <p class="text-xs text-gray-400 mt-1 uppercase tracking-wider font-semibold">Total Shop</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-[#273043] text-white rounded shadow-sm p-5 flex items-center justify-between">
+                        <div class="bg-[#1e2433] p-3 rounded">
+                            <i data-lucide="globe" class="w-6 h-6 text-gray-300"></i>
+                        </div>
+                        <div class="text-right">
+                            <h3 class="text-2xl font-bold">8540</h3>
+                            <p class="text-xs text-gray-400 mt-1 uppercase tracking-wider font-semibold">Online Orders
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Renderiza os ícones do Lucide
+            lucide.createIcons();
+
+            // 2. Lógica do Toggle do Menu Lateral
+            const toggleBtn = document.getElementById('toggleSidebar');
+            const sidebar = document.getElementById('sidebar');
+
+            toggleBtn.addEventListener('click', () => {
+                // Adiciona margem negativa para esconder fora da tela
+                sidebar.classList.toggle('-ml-64');
+            });
+
+            // Lida com redimensionamento de tela para garantir UX fluida
+            window.addEventListener('resize', () => {
+                if (window.innerWidth >= 768) {
+                    sidebar.classList.remove('-ml-64');
+                } else {
+                    sidebar.classList.add('-ml-64');
+                }
+            });
+
+            // Esconde menu no mobile por padrão ao carregar
+            if (window.innerWidth < 768) {
+                sidebar.classList.add('-ml-64');
+            }
+
+            // 3. Renderiza o Gráfico com Chart.js imitando o layout da imagem
+            const ctx = document.getElementById('analysisChart').getContext('2d');
+
+            // Dados simulados para criar as curvas do print
+            const labels = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+
+            // Função simples para gerar curvas suaves parecidas com Seno e Cosseno
+            const generateSineCurve = (offset) => labels.map(x => Math.sin((x * 0.8) + offset));
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'sin(x)',
+                            data: generateSineCurve(0), // Curva laranja
+                            borderColor: '#da542e',
+                            backgroundColor: 'transparent',
+                            borderWidth: 2,
+                            tension: 0.4, // Suaviza as pontas (Bézier)
+                            pointBackgroundColor: 'white',
+                            pointBorderColor: '#da542e',
+                            pointRadius: 4,
+                            pointHoverRadius: 6
+                        },
+                        {
+                            label: 'cos(x)',
+                            data: generateSineCurve(Math.PI / 2), // Curva azul defasada
+                            borderColor: '#27a9e3',
+                            backgroundColor: 'transparent',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            pointBackgroundColor: 'white',
+                            pointBorderColor: '#27a9e3',
+                            pointRadius: 4,
+                            pointHoverRadius: 6
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            align: 'end',
+                            labels: {
+                                usePointStyle: true,
+                                boxWidth: 8,
+                                font: { size: 12 }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(30, 36, 51, 0.9)',
+                            titleFont: { size: 13 },
+                            bodyFont: { size: 13 },
+                            padding: 10,
+                            cornerRadius: 4,
+                            displayColors: true
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: '#f3f4f6',
+                                drawBorder: false
+                            },
+                            ticks: { color: '#9ca3af' }
+                        },
+                        y: {
+                            min: -1.0,
+                            max: 1.0,
+                            ticks: {
+                                stepSize: 0.5,
+                                color: '#9ca3af',
+                                callback: function (value) {
+                                    return value.toFixed(1); // Formata com 1 casa decimal (1.0, 0.5, etc)
+                                }
+                            },
+                            grid: {
+                                color: '#f3f4f6',
+                                drawBorder: false
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
