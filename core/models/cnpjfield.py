@@ -22,8 +22,7 @@ class CNPJField(models.CharField):
         if len(value) != 14:
             raise ValidationError(_('Invalid CNPJ length.'))
 
-        if validate_cnpj(value):
-            raise ValidationError(_('Invalid CNPJ number.'))
+        validate_cnpj(value)
 
         return value
 

@@ -1,6 +1,5 @@
 
 # Stack Tecnológica - Backend & Core
-
 | Camada | Tecnologia | Justificativa |
 | :--- | :--- | :--- |
 | Linguagem | Python 3.14+ | Tipagem moderna, ecossistema robusto |
@@ -11,6 +10,7 @@
 | Cache | Redis | Sessões, cache de queries, filas (Celery) |
 | Filas/Tasks | Celery + Redis | Processamento assíncrono (emails, relatórios) |
 
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                        CLIENTES (SaaS)                      │
 │                    (Qualquer IP, 2FA opcional)              │
@@ -43,6 +43,8 @@
 │   - Multi-Tenant Data   │     │   - Celery Tasks            │
 │   - Simple History      │     │   - Session Storage         │
 └─────────────────────────┘     └─────────────────────────────┘
+
+```
 
 Tailwind CSS + DaisyUI (visual moderno e profissional)
 django-htmx (integração obrigatória)

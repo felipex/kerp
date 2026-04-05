@@ -118,7 +118,7 @@ Key rules:
 
 ### Architecture
 - Use a **Service Layer** for business logic. Keep views thin.
-- Domain logic belongs in services, not in views, serializers, or management commands.
+- Domain logic belongs in services and in models, not in views, serializers, or management commands.
 - Use factories (factory-boy) for test data. Place in `app/factories.py`.
 
 ### Error Handling

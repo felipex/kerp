@@ -1,1 +1,27 @@
-<h2>Top bar</h2>
+<div class="menu">
+    <nav class="dropdown">
+        <button class="btn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-grid-3x3-gap-fill fs-1 icon_menu"></i>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+            <li><a href="/index"><i class="bi bi-house-fill"></i> Home</a></li>
+            <li><a href="/crm"><i class="bi bi-person-workspace"></i> CRM</a></li>
+            <li><a href="#"><i class="bi bi-cart-fill"></i> Vendas</a></li>
+            <li><a href="#"><i class="bi bi-cart-fill"></i> Compras</a></li>
+            <li><a href="#"><i class="bi bi-boxes"></i> Estoque</a></li>
+            <li><a href="#"><i class="bi bi-cash-coin"></i> Financeiro</a></li>
+            <li><a href="#"><i class="bi bi-gear-fill"></i> Produção</a></li>
+            <li><a href="#"><i class="bi bi-command"></i> Projetos</a></li>
+            <li><a href="#"><i class="bi bi-people"></i> RH</a></li>
+            <li>
+                <hr class="dropdown-divider">
+            </li>
+            <li><a href="#"><i class="bi bi-gear-fill"></i> Configurações</a></li>
+            <li><a class="dropdown-item" href="#">Sair</a></li>
+
+        </ul>
+    </nav>
+</div>
+<div class="user">
+    <span>{{ user.username }}</s pan>
+</div>

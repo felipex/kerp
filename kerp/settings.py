@@ -120,3 +120,8 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 AUTH_USER_MODEL = 'users.User'
+
+# No final do seu settings.py
+LOGIN_REDIRECT_URL = 'crm'
+LOGOUT_REDIRECT_URL = 'login'
+LOGIN_URL = 'login'

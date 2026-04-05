@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h5>Alterar Contato:</h5>
+<h4>{{ contact.name }}</h4>
+<form class="row g-3" method="post">
+    {% csrf_token %}
+    {% include 'crm/contacts/custom_form.html' with form=form %}
+</form>
+
+{% endblock %}

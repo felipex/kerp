@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Novo Cliente</h1>
+<h1>Novo Contato</h1>
 
 <form class="row g-3" method="post">
     {% csrf_token %}
-    {% include 'crm/customers/custom_form.html' with form=form %}
+    {% include 'crm/contacts/custom_form.html' with form=form %}
 </form>
 {% endblock %}

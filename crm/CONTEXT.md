@@ -8,9 +8,14 @@ Módulo de CRM do ERP.
 - Contato: Contatos do cliente (dependente)
 
 ## Regras de Negócio
-1. Cliente pode ser PF ou PJ
-2. Contato deve ter um cliente
-3. Cliente não pode ser excluído, fica apenas com uma marcação no campo deleted_at
+* Cliente pode ser PF ou PJ
+* Se for PF, deve ter CPF e RG
+* Se for PJ, deve ter CNPJ
+* Se for PJ, não pode ter CPF e RG
+* Se for PF, não pode ter CNPJ
+* CPF e CNPJ devem ser únicos
+* Contato deve ter um cliente
+* Cliente não pode ser excluído, fica apenas com uma marcação no campo deleted_at
 
 ## Relacionamentos Externos
-- crm.Cliente (ForeignKey)
+* crm.Cliente (ForeignKey)
